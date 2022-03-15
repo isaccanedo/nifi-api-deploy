@@ -1,0 +1,33 @@
+nifi:
+  url: http://192.168.99.103:9091
+  clientId: Deployment Script v1
+  templateUri: "https://cwiki.apache.org/confluence/download/attachments/57904847/Hello_NiFi_Web_Service.xml?version=1&modificationDate=1449369797000&api=v2"
+  # templateUri: file:./Hello_nifi.xml
+  undeploy:
+    controllerServices:
+      - StandardHttpContextMap
+      - SomeOtherControllerService
+    processGroups:
+      - Hello NiFi Web Service
+    templates:
+      - Hello NiFi Web Service
+
+controllerServices:
+  StandardHttpContextMap:
+    state: ENABLED
+    config:
+      Maximum Outstanding Requests: 20
+
+processGroups:
+  root: ~
+
+  Hello NiFi Web Service:
+    processors:
+      Receive request and data:
+        state: RUNNING
+        config:
+          Listening Port: 10000
+
+      "Update Request Body with a greeting!":
+        config:
+          Replacement Value: Dynamically Configured NiFi!
